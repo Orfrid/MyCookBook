@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_home">
+
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="com.example.mycookbook.HomeFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_home2" >
+        <action
+            android:id="@+id/action_navigation_home_to_recipeDetails"
+            app:destination="@id/recipeDetailsFragment" >
+            <argument
+                android:name="recipeName" />
+        </action>
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_add"
+        android:name="com.example.mycookbook.AddRecipeFragment"
+        android:label="@string/title_dashboard"
+        tools:layout="@layout/fragment_add_recipe" />
+
+    <fragment
+        android:id="@+id/navigation_favorites"
+        android:name="com.example.mycookbook.FavoritesFragment"
+        android:label="@string/title_notifications"
+        tools:layout="@layout/fragment_favorites" >
+        <action
+            android:id="@+id/action_navigation_favorites_to_recipeDetails"
+            app:destination="@id/recipeDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/recipeDetailsFragment"
+        android:name="com.example.mycookbook.RecipeDetailsFragment"
+        android:label="{recipeName}"
+        tools:layout="@layout/fragment_recipe_details">
+        <argument android:name="recipeName"
+            app:argType="string" />
+        <argument
+            android:name="recipeIngredients"
+            app:argType="string" />
+        <argument
+            android:name="recipeInstructions"
+            app:argType="string" />
+    </fragment>
+</navigation>
