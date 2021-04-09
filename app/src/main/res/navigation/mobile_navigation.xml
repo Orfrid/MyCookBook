@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.example.mycookbook.HomeFragment"
+        android:name="com.cookbook.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home2" >
         <action
@@ -20,22 +20,30 @@
 
     <fragment
         android:id="@+id/navigation_add"
-        android:name="com.example.mycookbook.AddRecipeFragment"
+        android:name="com.cookbook.AddRecipeFragment"
         android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_add_recipe" />
+        tools:layout="@layout/fragment_add_recipe" >
+        <action
+            android:id="@+id/action_navigation_add_to_login"
+            app:destination="@id/login" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_favorites"
-        android:name="com.example.mycookbook.FavoritesFragment"
+        android:name="com.cookbook.favorites"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_favorites" >
         <action
             android:id="@+id/action_navigation_favorites_to_recipeDetails"
             app:destination="@id/recipeDetailsFragment" />
+        <action
+            android:id="@+id/action_navigation_favorites_to_login"
+            app:destination="@id/login" />
     </fragment>
+
     <fragment
         android:id="@+id/recipeDetailsFragment"
-        android:name="com.example.mycookbook.RecipeDetailsFragment"
+        android:name="com.cookbook.RecipeDetailsFragment"
         android:label="{recipeName}"
         tools:layout="@layout/fragment_recipe_details">
         <argument android:name="recipeName"
@@ -46,5 +54,22 @@
         <argument
             android:name="recipeInstructions"
             app:argType="string" />
+        <argument
+            android:name="imageUrl"
+            app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/navigation_profile"
+        android:name="com.cookbook.profile"
+        android:label="profile"
+        tools:layout="@layout/fragment_profile">
+        <action
+            android:id="@+id/action_navigation_profile_to_login"
+            app:destination="@id/login" />
+    </fragment>
+    <fragment
+        android:id="@+id/login"
+        android:name="com.cookbook.Login"
+        android:label="login"
+        tools:layout="@layout/fragment_login" />
 </navigation>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -23,7 +24,7 @@
                 android:padding="10dp">
 
 
-                <LinearLayout
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
@@ -31,65 +32,70 @@
 
                     <EditText
                         android:id="@+id/title"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="8dp"
                         android:background="@drawable/background_nocorner"
                         android:hint="RecipeName"
                         android:imeOptions="actionDone"
                         android:inputType="text"
                         android:padding="10dp"
-                        android:textColor="@color/textColor" />
+                        android:textColor="@color/textColor"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/attached_image"
+                        tools:layout_conversion_absoluteHeight="44dp"
+                        tools:layout_conversion_absoluteWidth="362dp" />
 
                     <EditText
                         android:id="@+id/ingredients"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="8dp"
                         android:background="@drawable/background_nocorner"
                         android:hint="Ingredients"
                         android:imeOptions="actionDone"
                         android:inputType="textMultiLine"
                         android:minLines="1"
                         android:padding="10dp"
-                        android:textColor="@color/textColor" />
+                        android:textColor="@color/textColor"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/title"
+                        tools:layout_conversion_absoluteHeight="44dp"
+                        tools:layout_conversion_absoluteWidth="362dp" />
+
 
                     <EditText
                         android:id="@+id/directions"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="8dp"
                         android:background="@drawable/background_nocorner"
                         android:hint="Instructions"
+
                         android:imeOptions="actionDone"
                         android:inputType="textMultiLine"
                         android:minLines="2"
-
-                        android:padding="10dp"
-                        android:textColor="@color/textColor" />
-
-                    <TextView
-                        android:id="@+id/attach_name"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:background="@drawable/background_nocorner"
-                        android:drawableLeft="@android:drawable/ic_menu_gallery"
-                        android:drawablePadding="5dp"
-                        android:gravity="center_vertical"
-                        android:hint="Add Image"
                         android:padding="10dp"
                         android:textColor="@color/textColor"
-                        android:textSize="16sp" />
-
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/ingredients"
+                        tools:layout_conversion_absoluteHeight="65dp"
+                        tools:layout_conversion_absoluteWidth="362dp" />
 
                     <Button
                         android:id="@+id/sendButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginBottom="5dp"
+                        android:layout_marginTop="28dp"
                         android:background="@drawable/pressed_no_corners"
                         android:paddingLeft="15dp"
                         android:paddingRight="15dp"
@@ -97,17 +103,28 @@
                         android:textAllCaps="false"
                         android:textColor="@color/white"
                         android:textSize="20sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/directions"
+                        tools:layout_conversion_absoluteHeight="48dp"
+                        tools:layout_conversion_absoluteWidth="107dp" />
 
-                <ImageView
-                    android:id="@+id/attached_image"
-                    android:layout_width="wrap_content"
-                    android:layout_height="300dp"
-                    android:layout_centerInParent="true"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/placeholder"
-                    android:visibility="invisible" />
+                    <ImageView
+                        android:id="@+id/attached_image"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/placeholder"
+                        app:layout_constraintDimensionRatio="3:2"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
             </RelativeLayout>
         </androidx.cardview.widget.CardView>
     </ScrollView>
