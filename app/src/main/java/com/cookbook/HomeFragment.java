@@ -68,7 +68,6 @@ public class HomeFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Recipe clickedRecipe = viewModel.getList().getValue().get(i);
-                clickedRecipe.getImageUrl();
                 HomeFragmentDirections.ActionNavigationHomeToRecipeDetails action = HomeFragmentDirections.actionNavigationHomeToRecipeDetails(clickedRecipe.getName(),
                         clickedRecipe.getIngredients(),
                         clickedRecipe.getInstructions(),

@@ -15,7 +15,6 @@ public class Recipe {
     @PrimaryKey
     @NonNull
     private String name;
-    @NonNull
     private String user;
     private String instructions;
     private String ingredients;
@@ -36,7 +35,7 @@ public class Recipe {
     public void fromMap(Map<String, Object> map){
         name = (String)map.get("name");
         instructions = (String)map.get("instructions");
-        ingredients = (String)map.get("instructions");
+        ingredients = (String)map.get("ingredients");
         user = (String)map.get("user");
         imageUrl = (String)map.get("imageUrl");
         Timestamp ts = (Timestamp)map.get("lastUpdated");

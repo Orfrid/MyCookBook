@@ -61,7 +61,7 @@
     <fragment
         android:id="@+id/navigation_profile"
         android:name="com.cookbook.profile"
-        android:label="profile"
+        android:label="Profile"
         tools:layout="@layout/fragment_profile">
         <action
             android:id="@+id/action_navigation_profile_to_login"
@@ -69,14 +69,35 @@
         <action
             android:id="@+id/action_navigation_profile_to_navigation_home"
             app:destination="@id/navigation_home" />
+        <action
+            android:id="@+id/action_navigation_profile_to_editRecipe"
+            app:destination="@id/editRecipe" />
     </fragment>
     <fragment
         android:id="@+id/login"
         android:name="com.cookbook.Login"
-        android:label="login"
-        tools:layout="@layout/fragment_login" >
+        android:label="Login"
+        tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/action_login_to_navigation_home"
             app:destination="@id/navigation_home" />
+    </fragment>
+    <fragment
+        android:id="@+id/editRecipe"
+        android:name="com.cookbook.EditRecipe"
+        android:label="Edit"
+        tools:layout="@layout/fragment_edit_recipe">
+        <argument
+            android:name="recipeName"
+            app:argType="string" />
+        <argument
+            android:name="recipeIngredients"
+            app:argType="string" />
+        <argument
+            android:name="recipeInstructions"
+            app:argType="string" />
+        <argument
+            android:name="imageUrl"
+            app:argType="string" />
     </fragment>
 </navigation>

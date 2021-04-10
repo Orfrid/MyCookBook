@@ -106,6 +106,20 @@ public class Model {
         });
     }
 
+    public void editRecipe(final Recipe recipe, final AddRecipeListener listener) {
+        modelFirebase.editRecipe(recipe, new AddRecipeListener() {
+            @Override
+            public void onComplete() {
+                refreshAllRecipes(new GetAllRecipesListener() {
+                    @Override
+                    public void onComplete() {
+                        listener.onComplete();
+                    }
+                });
+            }
+        });
+    }
+
     public void addUser(final User user, final AddUserListener listener) {
         modelFirebase.addUser(user, new AddUserListener() {
             @Override

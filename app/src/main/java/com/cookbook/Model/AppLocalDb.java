@@ -5,7 +5,7 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import com.cookbook.MyApplication;
 
-@Database(entities = {Recipe.class}, version = 4)
+@Database(entities = {Recipe.class}, version = 5)
 abstract class AppLocalDbRepository extends RoomDatabase {
     public abstract RecipeDao recipeDao();
 }

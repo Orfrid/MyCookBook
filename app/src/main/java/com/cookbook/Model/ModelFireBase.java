@@ -54,13 +54,25 @@ public class ModelFireBase {
                 Log.d("TAG","recipe added successfully");
                 CurrentUser.instance.getUser().getOwnRecipes().add(recipe);
                 listener.onComplete();
-                /*db.collection("users").document(CurrentUser.instance.getUser().getName())
-                        .set(CurrentUser.instance.getUser().toMap()).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        listener.onComplete();
-                    }
-                });*/
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.w("TAG","failed adding recipe");
+                listener.onComplete();
+            }
+        });
+    }
+
+    public void editRecipe(Recipe recipe, final Model.AddRecipeListener listener) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("recipes").document(recipe.getName())
+                .set(recipe.toMap()).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Log.d("TAG","recipe added successfully");
+                CurrentUser.instance.getUser().getOwnRecipes().add(recipe);
+                listener.onComplete();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override

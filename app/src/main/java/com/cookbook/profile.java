@@ -64,9 +64,8 @@ public class profile extends Fragment {
             @Override
             public void onClick(View view) {
                 logout();
-                NavController nav = Navigation.findNavController(v);
-                NavDirections a = profileDirections.actionNavigationProfileToLogin();
-                nav.navigate(a);
+                NavDirections navigateToLogin = profileDirections.actionNavigationProfileToLogin();
+                Navigation.findNavController(v).navigate(navigateToLogin);
             }
         });
 
@@ -85,13 +84,11 @@ public class profile extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Recipe clickedRecipe = viewModel.getList().getValue().get(i);
-                clickedRecipe.getImageUrl();
-                HomeFragmentDirections.ActionNavigationHomeToRecipeDetails action = HomeFragmentDirections.actionNavigationHomeToRecipeDetails(clickedRecipe.getName(),
-                        clickedRecipe.getIngredients(),
-                        clickedRecipe.getInstructions(),
-                        clickedRecipe.getImageUrl());
-
-                Navigation.findNavController(v).navigate(action);
+                NavDirections navigateToRecipeEdit = profileDirections.actionNavigationProfileToEditRecipe(clickedRecipe.getName(),
+                                                                                                            clickedRecipe.getIngredients(),
+                                                                                                            clickedRecipe.getInstructions(),
+                                                                                                            clickedRecipe.getImageUrl());
+                Navigation.findNavController(v).navigate(navigateToRecipeEdit);
             }
         });
 
