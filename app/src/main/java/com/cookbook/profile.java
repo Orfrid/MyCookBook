@@ -6,6 +6,8 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
@@ -13,6 +15,7 @@ import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -20,6 +23,7 @@ import android.widget.TextView;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 
+import com.cookbook.Model.CurrentUser;
 import com.cookbook.Model.Model;
 import com.cookbook.Model.ModelSql;
 import com.cookbook.Model.Recipe;
@@ -30,12 +34,12 @@ import java.util.List;
 
 public class profile extends Fragment {
     ListView list;
-    RecipeListViewModel viewModel;
-    ModelSql modelSql = new ModelSql();
+    MyRecipeListViewModel viewModel;
     ProgressBar progBar;
     MyAdapter adapter;
     SwipeRefreshLayout sref;
-
+    Button logOutBtn;
+    View v;
     public profile() {
         // Required empty public constructor
     }
@@ -44,14 +48,27 @@ public class profile extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_home2, container, false);
-        viewModel = new ViewModelProvider(this).get(RecipeListViewModel.class);
-        list = v.findViewById(R.id.recipesslist_list);
+        v = inflater.inflate(R.layout.fragment_profile, container, false);
+        viewModel = new ViewModelProvider(this).get(MyRecipeListViewModel.class);
 
-        progBar = v.findViewById(R.id.recipeslist_progress);
+        list = v.findViewById(R.id.myrecipesslist_list);
+
+        progBar = v.findViewById(R.id.myrecipeslist_progress);
         progBar.setVisibility(View.INVISIBLE);
 
-        sref = v.findViewById(R.id.recipeslist_swipe);
+        sref = v.findViewById(R.id.myrecipeslist_swipe);
+
+        logOutBtn = v.findViewById(R.id.logout_btn);
+
+        logOutBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                logout();
+                NavController nav = Navigation.findNavController(v);
+                NavDirections a = profileDirections.actionNavigationProfileToLogin();
+                nav.navigate(a);
+            }
+        });
 
         sref.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -74,7 +91,7 @@ public class profile extends Fragment {
                         clickedRecipe.getInstructions(),
                         clickedRecipe.getImageUrl());
 
-                Navigation.findNavController(view).navigate(action);
+                Navigation.findNavController(v).navigate(action);
             }
         });
 
@@ -84,7 +101,18 @@ public class profile extends Fragment {
                 adapter.notifyDataSetChanged();
             }
         });
+
         return v;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if(CurrentUser.instance.getUser() == null || CurrentUser.instance.getUser().getName() == null) {
+            NavController nav = Navigation.findNavController(v);
+            NavDirections a = profileDirections.actionNavigationProfileToLogin();
+            nav.navigate(a);
+        }
     }
 
     void reloadData() {
@@ -138,4 +166,7 @@ public class profile extends Fragment {
         }
     }
 
+    private void logout() {
+        CurrentUser.instance.getUser().setName(null);
+    }
 }

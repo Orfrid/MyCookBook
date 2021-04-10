@@ -66,10 +66,17 @@
         <action
             android:id="@+id/action_navigation_profile_to_login"
             app:destination="@id/login" />
+        <action
+            android:id="@+id/action_navigation_profile_to_navigation_home"
+            app:destination="@id/navigation_home" />
     </fragment>
     <fragment
         android:id="@+id/login"
         android:name="com.cookbook.Login"
         android:label="login"
-        tools:layout="@layout/fragment_login" />
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_login_to_navigation_home"
+            app:destination="@id/navigation_home" />
+    </fragment>
 </navigation>

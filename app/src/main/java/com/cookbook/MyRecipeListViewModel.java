@@ -5,17 +5,18 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.cookbook.Model.ModelFireBase;
 import com.cookbook.Model.Recipe;
 import com.cookbook.Model.Model;
 
 import java.util.List;
 
-public class RecipeListViewModel extends ViewModel {
+public class MyRecipeListViewModel extends ViewModel {
 
     private LiveData<List<Recipe>> rpList;
 
-    public RecipeListViewModel() {
-        rpList = Model.instance.getAllRecipes();
+    public MyRecipeListViewModel() {
+        rpList = Model.instance.getCurrentUserRecipes();
     }
     public void setRpList(LiveData<List<Recipe>> rpList) {
 

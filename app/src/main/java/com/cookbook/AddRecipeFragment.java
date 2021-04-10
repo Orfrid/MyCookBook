@@ -10,11 +10,8 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
@@ -30,7 +27,6 @@ import android.widget.ImageView;
 import com.cookbook.Model.CurrentUser;
 import com.cookbook.Model.Recipe;
 import com.cookbook.Model.Model;
-import com.cookbook.Model.User;
 
 import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
@@ -77,7 +73,7 @@ public class AddRecipeFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        if(CurrentUser.instance.getUser().getName() == null) {
+        if(CurrentUser.instance.getUser() == null || CurrentUser.instance.getUser().getName() == null) {
             NavController nav = Navigation.findNavController(v);
             NavDirections a = AddRecipeFragmentDirections.actionNavigationAddToLogin();
             nav.navigate(a);

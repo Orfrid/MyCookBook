@@ -11,6 +11,9 @@ public class ModelSql {
         return AppLocalDb.db.recipeDao().getAllRecipes();
     }
 
+    public LiveData<List<Recipe>> getUserRecipes(){
+        return AppLocalDb.db.recipeDao().getCurrentUserRecipes(CurrentUser.instance.getUser().getName());
+    }
     public interface GetAllRecipesListener{
         void onComplete(LiveData<List<Recipe>> data);
     }

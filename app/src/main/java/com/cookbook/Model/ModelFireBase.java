@@ -52,7 +52,15 @@ public class ModelFireBase {
             @Override
             public void onSuccess(Void aVoid) {
                 Log.d("TAG","recipe added successfully");
+                CurrentUser.instance.getUser().getOwnRecipes().add(recipe);
                 listener.onComplete();
+                /*db.collection("users").document(CurrentUser.instance.getUser().getName())
+                        .set(CurrentUser.instance.getUser().toMap()).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        listener.onComplete();
+                    }
+                });*/
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override

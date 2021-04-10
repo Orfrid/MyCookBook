@@ -11,4 +11,7 @@ public class CurrentUser {
     public User getUser() {
         return this.user;
     }
+    public void setUser(User newUser) {
+         this.user = newUser;
+    }
 }

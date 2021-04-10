@@ -25,6 +25,7 @@ public class Model {
     }
 
     LiveData<List<Recipe>> recipesList;
+    LiveData<List<Recipe>> userRecipesList;
 
     public LiveData<List<Recipe>> getAllRecipes() {
         if (recipesList == null)
@@ -33,6 +34,11 @@ public class Model {
             refreshAllRecipes(null);
         }
         return recipesList;
+    }
+
+    public LiveData<List<Recipe>> getCurrentUserRecipes() {
+        userRecipesList = modelSql.getUserRecipes();
+        return userRecipesList;
     }
 
     public interface GetAllRecipesListener{

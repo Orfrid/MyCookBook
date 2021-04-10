@@ -57,12 +57,12 @@ public class Login extends Fragment {
         modelFirebase.getUser(enteredUsername, new Model.GetUserListener() {
             @Override
             public void onComplete(User user) {
-                if(user == null) {
+                if(user == null || user.getPassword() == null || enteredUsername.length() < 1 || enteredPassword.length() < 1) {
                     error.setText("Incorrect Username or Password");
                 } else {
                     if (user.getPassword().equals(enteredPassword)) {
                         CurrentUser.instance.getUser().setName(enteredUsername);
-                        Navigation.findNavController(v).popBackStack();
+                        Navigation.findNavController(v).navigate(LoginDirections.actionLoginToNavigationHome());
                     } else {
                         error.setText("Incorrect Username or Password");
                     }
