@@ -83,6 +83,25 @@ public class ModelFireBase {
         });
     }
 
+    public void deleteRecipe(Recipe recipe, final Model.DeleteListener listener) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("recipes").document(recipe.getName())
+                .delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Log.d("TAG","recipe deleted successfully");
+                CurrentUser.instance.getUser().getOwnRecipes().remove(recipe);
+                listener.onComplete();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.w("TAG","failed deleting recipe");
+                listener.onComplete();
+            }
+        });
+    }
+
     public void addUser(User user, final Model.AddUserListener listener) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("users").document(user.getName())
@@ -138,17 +157,6 @@ public class ModelFireBase {
                 listener.onComplete(recipe);
             }
         });
-    }
-
-    public void delete(Recipe recipe, final Model.DeleteListener listener) {
-//        FirebaseFirestore db = FirebaseFirestore.getInstance();
-//        db.collection("students").document(student.getId())
-//                .delete().addOnCompleteListener(new OnCompleteListener<Void>() {
-//            @Override
-//            public void onComplete(@NonNull Task<Void> task) {
-//                listener.onComplete();
-//            }
-//        });
     }
 
     public void uploadImage(Bitmap imageBmp, String name, final Model.UploadImageListener listener){

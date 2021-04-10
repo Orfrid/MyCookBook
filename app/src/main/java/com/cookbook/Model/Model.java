@@ -120,6 +120,25 @@ public class Model {
         });
     }
 
+    public void deleteRecipe(final Recipe recipe, final AddRecipeListener listener) {
+        modelSql.deleteRecipe(recipe, new DeleteListener() {
+            @Override
+            public void onComplete() {
+                modelFirebase.deleteRecipe(recipe, new DeleteListener() {
+                    @Override
+                    public void onComplete() {
+                        refreshAllRecipes(new GetAllRecipesListener() {
+                            @Override
+                            public void onComplete() {
+                                listener.onComplete();
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    }
+
     public void addUser(final User user, final AddUserListener listener) {
         modelFirebase.addUser(user, new AddUserListener() {
             @Override
@@ -144,9 +163,6 @@ public class Model {
     }
 
     interface DeleteListener extends AddRecipeListener { }
-    public void deleteRecipe(Recipe recipe, DeleteListener listener) {
-        modelFirebase.delete(recipe, listener);
-    }
 
     public interface UploadImageListener extends Listener<String>{ }
     public void uploadImage(Bitmap imageBmp, String name, final UploadImageListener listener) {

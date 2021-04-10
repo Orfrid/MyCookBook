@@ -68,6 +68,18 @@ public class EditRecipe extends Fragment {
             }
         });
 
+        deleteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Model.instance.deleteRecipe(recipe, new Model.AddRecipeListener() {
+                    @Override
+                    public void onComplete() {
+                        Navigation.findNavController(v).popBackStack();
+                    }
+                });
+            }
+        });
+
         return v;
     }
 }
