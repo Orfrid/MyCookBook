@@ -14,6 +14,11 @@ public class ModelSql {
     public LiveData<List<Recipe>> getUserRecipes(){
         return AppLocalDb.db.recipeDao().getCurrentUserRecipes(CurrentUser.instance.getUser().getName());
     }
+
+    public LiveData<List<Recipe>> getUserFavorites() {
+        return AppLocalDb.db.recipeDao().getCurrentUserFavories(CurrentUser.instance.getUser().getFavorites());
+    }
+
     public interface GetAllRecipesListener{
         void onComplete(LiveData<List<Recipe>> data);
     }

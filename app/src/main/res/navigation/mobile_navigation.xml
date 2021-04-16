@@ -30,7 +30,7 @@
 
     <fragment
         android:id="@+id/navigation_favorites"
-        android:name="com.cookbook.favorites"
+        android:name="com.cookbook.Favorites"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_favorites" >
         <action
@@ -56,6 +56,9 @@
             app:argType="string" />
         <argument
             android:name="imageUrl"
+            app:argType="string" />
+        <argument
+            android:name="user"
             app:argType="string" />
     </fragment>
     <fragment

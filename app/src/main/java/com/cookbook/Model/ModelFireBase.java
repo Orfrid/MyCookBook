@@ -45,6 +45,24 @@ public class ModelFireBase {
         });
     }
 
+    public void getUserFavorites(final GetAllRecipesListener listener) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("recipes").whereEqualTo("name",CurrentUser.instance.getUser().getFavorites()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                List<Recipe> data = new LinkedList<Recipe>();
+                if (task.isSuccessful()) {
+                    for (DocumentSnapshot doc:task.getResult()) {
+                        Recipe rp = new Recipe();
+                        rp.fromMap(doc.getData());
+                        data.add(rp);
+                    }
+                }
+                listener.onComplete(data);
+            }
+        });
+    }
+
     public void addRecipe(Recipe recipe, final Model.AddRecipeListener listener) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("recipes").document(recipe.getName())
@@ -115,6 +133,24 @@ public class ModelFireBase {
             @Override
             public void onFailure(@NonNull Exception e) {
                 Log.w("TAG","failed adding user");
+                listener.onComplete();
+            }
+        });
+    }
+
+    public void editUser(User user, final Model.AddUserListener listener) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("users").document(user.getName())
+                .set(user.toMap()).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Log.d("TAG","user favored a recipe");
+                listener.onComplete();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.w("TAG","favoring failed");
                 listener.onComplete();
             }
         });

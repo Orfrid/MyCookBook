@@ -3,7 +3,6 @@ package com.cookbook;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -11,36 +10,33 @@ import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 
 import com.cookbook.Model.CurrentUser;
 import com.cookbook.Model.Model;
-import com.cookbook.Model.ModelSql;
 import com.cookbook.Model.Recipe;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-
-public class profile extends Fragment {
+public class Favorites extends Fragment {
     ListView list;
-    MyRecipeListViewModel viewModel;
+    FavoritesViewModel viewModel;
     ProgressBar progBar;
-    MyAdapter adapter;
+    Favorites.MyAdapter adapter;
     SwipeRefreshLayout sref;
-    Button logOutBtn;
     View v;
-    public profile() {
+
+    public Favorites() {
         // Required empty public constructor
     }
 
@@ -48,26 +44,15 @@ public class profile extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        v = inflater.inflate(R.layout.fragment_profile, container, false);
-        viewModel = new ViewModelProvider(this).get(MyRecipeListViewModel.class);
+        v = inflater.inflate(R.layout.fragment_favorites, container, false);
+        viewModel = new ViewModelProvider(this).get(FavoritesViewModel.class);
 
-        list = v.findViewById(R.id.myrecipesslist_list);
+        list = v.findViewById(R.id.favoriteslist_list);
 
-        progBar = v.findViewById(R.id.myrecipeslist_progress);
+        progBar = v.findViewById(R.id.favoriteslist_progress);
         progBar.setVisibility(View.INVISIBLE);
 
-        sref = v.findViewById(R.id.myrecipeslist_swipe);
-
-        logOutBtn = v.findViewById(R.id.logout_btn);
-
-        logOutBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                logout();
-                NavDirections navigateToLogin = profileDirections.actionNavigationProfileToLogin();
-                Navigation.findNavController(v).navigate(navigateToLogin);
-            }
-        });
+        sref = v.findViewById(R.id.favoriteslist_swipe);
 
         sref.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -77,17 +62,18 @@ public class profile extends Fragment {
             }
         });
 
-        adapter = new MyAdapter();
+        adapter = new Favorites.MyAdapter();
         list.setAdapter(adapter);
 
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Recipe clickedRecipe = viewModel.getList().getValue().get(i);
-                NavDirections navigateToRecipeEdit = profileDirections.actionNavigationProfileToEditRecipe(clickedRecipe.getName(),
-                                                                                                            clickedRecipe.getIngredients(),
-                                                                                                            clickedRecipe.getInstructions(),
-                                                                                                            clickedRecipe.getImageUrl());
+                NavDirections navigateToRecipeEdit = FavoritesDirections.actionNavigationFavoritesToRecipeDetails(clickedRecipe.getName(),
+                        clickedRecipe.getIngredients(),
+                        clickedRecipe.getInstructions(),
+                        clickedRecipe.getImageUrl(),
+                        clickedRecipe.getUser());
                 Navigation.findNavController(v).navigate(navigateToRecipeEdit);
             }
         });
@@ -107,7 +93,7 @@ public class profile extends Fragment {
         super.onStart();
         if(CurrentUser.instance.getUser() == null || CurrentUser.instance.getUser().getName() == null) {
             NavController nav = Navigation.findNavController(v);
-            NavDirections a = profileDirections.actionNavigationProfileToLogin();
+            NavDirections a = FavoritesDirections.actionNavigationFavoritesToLogin();
             nav.navigate(a);
         }
     }
@@ -124,7 +110,7 @@ public class profile extends Fragment {
         });
     }
 
-    class MyAdapter extends BaseAdapter{
+    class MyAdapter extends BaseAdapter {
         @Override
         public int getCount() {
             if (viewModel.getList().getValue() == null){
@@ -161,11 +147,5 @@ public class profile extends Fragment {
             }
             return view;
         }
-    }
-
-    private void logout() {
-        CurrentUser.instance.getUser().setName(null);
-        CurrentUser.instance.getUser().setPassword(null);
-        CurrentUser.instance.getUser().setFavorites(null);
     }
 }

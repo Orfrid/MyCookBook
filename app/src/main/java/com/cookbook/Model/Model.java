@@ -26,6 +26,7 @@ public class Model {
 
     LiveData<List<Recipe>> recipesList;
     LiveData<List<Recipe>> userRecipesList;
+    LiveData<List<Recipe>> userFavoritesList;
 
     public LiveData<List<Recipe>> getAllRecipes() {
         if (recipesList == null)
@@ -39,6 +40,11 @@ public class Model {
     public LiveData<List<Recipe>> getCurrentUserRecipes() {
         userRecipesList = modelSql.getUserRecipes();
         return userRecipesList;
+    }
+
+    public LiveData<List<Recipe>> getUserFavorites() {
+        userFavoritesList = modelSql.getUserFavorites();
+        return userFavoritesList;
     }
 
     public interface GetAllRecipesListener{
@@ -78,10 +84,6 @@ public class Model {
 
     public interface GetUserListener {
         void onComplete(User user);
-    }
-
-    public void getRecipe(String id, GetRecipeListener listener) {
-        modelFirebase.getRecipe(id, listener);
     }
 
     public interface AddRecipeListener {
@@ -139,15 +141,6 @@ public class Model {
         });
     }
 
-    public void addUser(final User user, final AddUserListener listener) {
-        modelFirebase.addUser(user, new AddUserListener() {
-            @Override
-            public void onComplete() {
-                listener.onComplete();
-            }
-        });
-    }
-
     public void getUser(final String name, final GetUserListener listener) {
         modelFirebase.getUser(name, new GetUserListener() {
             @Override
@@ -157,14 +150,19 @@ public class Model {
         });
     }
 
-    public interface UpdateRecipeListener extends AddRecipeListener { }
-    public void updateRecipe(final Recipe recipe, final UpdateRecipeListener listener) {
-        modelFirebase.updateRecipe(recipe, listener);
+    public void editUser(final User user, final AddUserListener listener) {
+        modelFirebase.editUser(user, new AddUserListener() {
+            @Override
+            public void onComplete() {
+                listener.onComplete();
+            }
+        });
     }
 
     interface DeleteListener extends AddRecipeListener { }
 
     public interface UploadImageListener extends Listener<String>{ }
+
     public void uploadImage(Bitmap imageBmp, String name, final UploadImageListener listener) {
         modelFirebase.uploadImage(imageBmp, name, listener);
     }

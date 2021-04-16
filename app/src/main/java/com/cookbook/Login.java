@@ -62,6 +62,8 @@ public class Login extends Fragment {
                 } else {
                     if (user.getPassword().equals(enteredPassword)) {
                         CurrentUser.instance.getUser().setName(enteredUsername);
+                        CurrentUser.instance.getUser().setPassword(enteredPassword);
+                        CurrentUser.instance.getUser().setFavorites(user.getFavorites());
                         Navigation.findNavController(v).navigate(LoginDirections.actionLoginToNavigationHome());
                     } else {
                         error.setText("Incorrect Username or Password");

@@ -71,7 +71,8 @@ public class HomeFragment extends Fragment {
                 HomeFragmentDirections.ActionNavigationHomeToRecipeDetails action = HomeFragmentDirections.actionNavigationHomeToRecipeDetails(clickedRecipe.getName(),
                         clickedRecipe.getIngredients(),
                         clickedRecipe.getInstructions(),
-                        clickedRecipe.getImageUrl());
+                        clickedRecipe.getImageUrl(),
+                        clickedRecipe.getUser());
 
                 Navigation.findNavController(view).navigate(action);
             }

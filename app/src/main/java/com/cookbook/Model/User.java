@@ -11,11 +11,11 @@ import java.util.Map;
 public class User {
     private String name;
     private String password;
-    private List<Recipe> favorites;
+    private List<String> favorites;
     private List<Recipe> ownRecipes;;
 
     public User() {
-        this.favorites = new ArrayList<Recipe>();
+        this.favorites = new ArrayList<String>();
         this.ownRecipes = new ArrayList<Recipe>();
     }
     public String getName() {
@@ -34,11 +34,11 @@ public class User {
         this.password = password;
     }
 
-    public void setFavorites(List<Recipe> favorites) {
+    public void setFavorites(List<String> favorites) {
         this.favorites = favorites;
     }
 
-    public List<Recipe> getFavorites() {
+    public List<String> getFavorites() {
         return favorites;
     }
 
@@ -54,13 +54,13 @@ public class User {
         HashMap<String, Object> result = new HashMap<>();
         result.put("name", name);
         result.put("password", password);
+        result.put("favorites", favorites);
         return result;
     }
 
     public void fromMap(Map<String, Object> map){
         name = (String)map.get("name");
         password = (String)map.get("password");
-        favorites = (List<Recipe>) map.get("favorites");
-        ownRecipes = (List<Recipe>) map.get("ownRecipes");
+        favorites = (List<String>) map.get("favorites");
     }
 }
