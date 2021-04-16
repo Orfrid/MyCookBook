@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ModelSql {
@@ -16,10 +17,13 @@ public class ModelSql {
     }
 
     public LiveData<List<Recipe>> getUserFavorites() {
-        return AppLocalDb.db.recipeDao().getCurrentUserFavories(CurrentUser.instance.getUser().getFavorites());
+        if(CurrentUser.instance.getUser().getFavorites() == null) {
+            return AppLocalDb.db.recipeDao().getCurrentUserFavorites(new ArrayList<String>());
+        }
+        return AppLocalDb.db.recipeDao().getCurrentUserFavorites(CurrentUser.instance.getUser().getFavorites());
     }
 
-    public interface GetAllRecipesListener{
+    public interface GetAllRecipesListener {
         void onComplete(LiveData<List<Recipe>> data);
     }
 

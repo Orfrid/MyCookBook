@@ -31,7 +31,6 @@ import java.util.List;
 public class HomeFragment extends Fragment {
     ListView list;
     RecipeListViewModel viewModel;
-    ModelSql modelSql = new ModelSql();
     ProgressBar progBar;
     MyAdapter adapter;
     SwipeRefreshLayout sref;

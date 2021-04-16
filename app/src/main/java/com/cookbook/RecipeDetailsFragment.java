@@ -49,7 +49,7 @@ public class RecipeDetailsFragment extends Fragment {
         recipe.setIngredients(RecipeDetailsFragmentArgs.fromBundle(getArguments()).getRecipeIngredients());
         recipe.setInstructions(RecipeDetailsFragmentArgs.fromBundle(getArguments()).getRecipeInstructions());
         recipe.setImageUrl(RecipeDetailsFragmentArgs.fromBundle(getArguments()).getImageUrl());
-        recipe.setImageUrl(RecipeDetailsFragmentArgs.fromBundle(getArguments()).getUser());
+        recipe.setUser(RecipeDetailsFragmentArgs.fromBundle(getArguments()).getUser());
 
         // inject values into page
         name.setText(recipe.getName());

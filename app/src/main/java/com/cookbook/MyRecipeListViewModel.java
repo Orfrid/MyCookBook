@@ -12,19 +12,16 @@ import com.cookbook.Model.Model;
 import java.util.List;
 
 public class MyRecipeListViewModel extends ViewModel {
-
     private LiveData<List<Recipe>> rpList;
 
     public MyRecipeListViewModel() {
         rpList = Model.instance.getCurrentUserRecipes();
     }
     public void setRpList(LiveData<List<Recipe>> rpList) {
-
         this.rpList = rpList;
     }
 
     LiveData<List<Recipe>> getList(){
-
         return rpList;
     }
 }

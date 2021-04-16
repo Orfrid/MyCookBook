@@ -89,7 +89,7 @@ public class AddRecipeFragment extends Fragment {
         BitmapDrawable drawable = (BitmapDrawable)attached_image.getDrawable();
         Bitmap bitmap = drawable.getBitmap();
 
-        Model.instance.uploadImage(bitmap, recipe.getUser(), new Model.UploadImageListener() {
+        Model.instance.uploadImage(bitmap, recipe.getName(), new Model.UploadImageListener() {
             @Override
             public void onComplete(String url) {
                 if (url == null){

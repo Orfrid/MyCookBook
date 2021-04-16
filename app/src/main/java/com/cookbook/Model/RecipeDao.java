@@ -18,7 +18,7 @@ public interface RecipeDao {
     LiveData<List<Recipe>> getCurrentUserRecipes(String userName);
 
     @Query("select * from Recipe where name IN (:names)")
-    LiveData<List<Recipe>> getCurrentUserFavories(List<String> names);
+    LiveData<List<Recipe>> getCurrentUserFavorites(List<String> names);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(Recipe... recipes);
