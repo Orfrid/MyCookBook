@@ -66,4 +66,24 @@ public class ModelSql {
         MyAsyncTask task = new MyAsyncTask();
         task.execute();
     }
+
+    public void cleanDeletedRecipes(final List<String> recipesNames, final Model.DeleteListener listener) {
+        class MyAsyncTask extends AsyncTask {
+            @Override
+            protected Object doInBackground(Object[] objects) {
+                AppLocalDb.db.recipeDao().removeDeletedRecipes(recipesNames);
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Object o) {
+                super.onPostExecute(o);
+                if (listener != null){
+                    listener.onComplete();
+                }
+            }
+        };
+        MyAsyncTask task = new MyAsyncTask();
+        task.execute();
+    }
 }

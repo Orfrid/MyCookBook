@@ -23,6 +23,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import com.cookbook.Model.CurrentUser;
 import com.cookbook.Model.Recipe;
@@ -37,6 +38,8 @@ public class AddRecipeFragment extends Fragment {
     Button sendButton;
     ImageView attached_image;
     View v;
+    ProgressBar progBar;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -47,6 +50,8 @@ public class AddRecipeFragment extends Fragment {
         instructions = (EditText) v.findViewById(R.id.directions);
         sendButton = (Button) v.findViewById(R.id.sendButton);
         attached_image = (ImageView) v.findViewById(R.id.attached_image);
+        progBar = v.findViewById(R.id.addRecipe_progress);
+        progBar.setVisibility(View.INVISIBLE);
 
         Typeface font = Typeface.createFromAsset(getContext().getAssets(), "fonts/didact.otf");
         Title.setTypeface(font);
@@ -81,6 +86,9 @@ public class AddRecipeFragment extends Fragment {
     }
 
     private void saveRecipe() {
+        sendButton.setActivated(false);
+        progBar.setVisibility(View.VISIBLE);
+
         final Recipe recipe = new Recipe();
         recipe.setName(Title.getText().toString());
         recipe.setIngredients(ingredients.getText().toString());
@@ -94,11 +102,13 @@ public class AddRecipeFragment extends Fragment {
             public void onComplete(String url) {
                 if (url == null){
                     displayFailedError();
-                }else{
+                } else {
                     recipe.setImageUrl(url);
                     Model.instance.addRecipe(recipe, new Model.AddRecipeListener() {
                         @Override
                         public void onComplete() {
+                            sendButton.setActivated(true);
+                            progBar.setVisibility(View.INVISIBLE);
                             Navigation.findNavController(sendButton).popBackStack();
                         }
                     });

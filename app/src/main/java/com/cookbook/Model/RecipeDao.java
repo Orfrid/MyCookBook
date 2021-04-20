@@ -20,6 +20,9 @@ public interface RecipeDao {
     @Query("select * from Recipe where name IN (:names)")
     LiveData<List<Recipe>> getCurrentUserFavorites(List<String> names);
 
+    @Query("delete from Recipe where name not in (:names)")
+    void removeDeletedRecipes(List<String> names);
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(Recipe... recipes);
 
